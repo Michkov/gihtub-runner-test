@@ -1,0 +1,42 @@
+name: 5-Hour Long-Running Job
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'  # Runs daily at 2 AM UTC
+
+jobs:
+  long-running-process:
+    runs-on: self-hosted
+    timeout-minutes: 330  # 5.5 hours = 330 minutes
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      
+      - name: Run 5-hour process
+        run: |
+          # Example: long-running data processing
+          python scripts/long_process.py
+        env:
+          PROCESS_DURATION_HOURS: 5
+      
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: process-results
+          path: output/
+      
+      - name: Notify on completion
+        if: always()
+        run: |
+          echo "Process completed with status: ${{ job.status }}"
