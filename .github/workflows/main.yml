@@ -7,7 +7,7 @@ on:
 
 jobs:
   long-running-process:
-    runs-on: self-hosted
+    runs-on: arc-runner-set
     timeout-minutes: 330  # 5.5 hours = 330 minutes
     
     steps:
