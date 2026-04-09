@@ -2,8 +2,6 @@ name: 5-Hour Long-Running Job
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 */6 * * *'  # Runs daily at 2 AM UTC
 
 jobs:
   long-running-process:
